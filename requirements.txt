@@ -2,4 +2,4 @@ wheel
 python-dotenv
 astral
 pytz
-opencv-python
+opencv-python-headless
