@@ -12,6 +12,17 @@ def CheckNighttime():
 def remoteUpload():
     return True
 
+def generateName():
+    dir = config['LocalOutput']
+    timestamp = str(datetime.now().timestamp())
+    if(bool(config['EnableLocal'])):
+        tag = "*"
+    else:
+        tag = ""
+    file = ".jpg"
+    return dir+timestamp+tag+file
+
+
 def takePicture():
     cap = cv2.VideoCapture(int(config['CameraID']))
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(config['FrameWidth']))
@@ -19,7 +30,7 @@ def takePicture():
     r, frame = cap.read()
     if r:
         if True:
-            cv2.imwrite(str(datetime.now().timestamp())+".jpg",frame)
+            cv2.imwrite(generateName(),frame)
             #save locally
         if False:
             pass #Save Remotely
