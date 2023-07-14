@@ -53,9 +53,11 @@ def takePicture():
                     #save locally
                 if config['EnableRemote']:
                     remoteUpload()
+                cap.release()
                 break
         else:
             print('Failed to take picture!')
+            cap.release()
             break
         frameNumber = frameNumber + 1
 
