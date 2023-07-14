@@ -35,8 +35,8 @@ def takePicture():
         if bool(config['EnableLocal']):
             cv2.imwrite(generateName(),frame)
             #save locally
-        if False:
-            pass #Save Remotely
+        if bool(config['EnableRemote']):
+            remoteUpload()
 
 def main():
     print("Starting Melilapse")
