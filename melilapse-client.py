@@ -51,11 +51,20 @@ def takePicture():
     else:
         print('Failed to take picture!')
 
+def validateConfig():
+    configValid = True
+    return configValid
+
 def main():
     """What is life
     """
     print("Starting Melilapse")
-    takePicture()
+    print("Validating Config")
+    if(validateConfig()):
+        print("Config appears Valid")
+        takePicture()
+    else:
+        print("Invalid Config")
     print("Ending Melilapse")
 
 load_dotenv()
