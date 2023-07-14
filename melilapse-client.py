@@ -12,10 +12,10 @@ def CheckNighttime():
 def remoteUpload():
     return True
 
-def generateName():
+def generateName(goldenhour = False):
     dir = config['LocalOutput']
     timestamp = str(datetime.now().timestamp())
-    if(bool(config['EnableLocal'])):
+    if(goldenhour):
         tag = "*"
     else:
         tag = ""
