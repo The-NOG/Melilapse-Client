@@ -3,10 +3,13 @@ from datetime import datetime
 import cv2
 
 
-def CheckDaytime():
+def checkDaytime():
     return True
 
-def CheckNighttime():
+def checkNighttime():
+    return False
+
+def checkGoldenHour():
     return False
 
 def remoteUpload():
@@ -29,7 +32,7 @@ def takePicture():
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, int(config['FrameHeight']))
     r, frame = cap.read()
     if r:
-        if True:
+        if bool(config['EnableLocal']):
             cv2.imwrite(generateName(),frame)
             #save locally
         if False:
