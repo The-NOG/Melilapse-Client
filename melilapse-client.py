@@ -39,19 +39,25 @@ def generateName(goldenHour = False):
 def takePicture():
     """Takes a picture
     """
+    frame = 0
     cap = cv2.VideoCapture(int(config['CameraID']))
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(config['FrameWidth']))
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, int(config['FrameHeight']))
     print('Taking Picture')
-    r, frame = cap.read()
-    if r:
-        if config['EnableLocal']:
-            cv2.imwrite(generateName(),frame)
-            #save locally
-        if config['EnableRemote']:
-            remoteUpload()
-    else:
-        print('Failed to take picture!')
+    while True:
+        r, frame = cap.read()
+        if r:
+            if(frame == 15):
+                if config['EnableLocal']:
+                    cv2.imwrite(generateName(),frame)
+                    #save locally
+                if config['EnableRemote']:
+                    remoteUpload()
+                break
+        else:
+            print('Failed to take picture!')
+            break
+        frame = frame + 1
 
 def validateConfig():
     configValid = True
