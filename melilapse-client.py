@@ -30,6 +30,7 @@ def takePicture():
     cap = cv2.VideoCapture(int(config['CameraID']))
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(config['FrameWidth']))
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, int(config['FrameHeight']))
+    print('Taking Picture')
     r, frame = cap.read()
     if r:
         if bool(config['EnableLocal']):
@@ -37,6 +38,8 @@ def takePicture():
             #save locally
         if bool(config['EnableRemote']):
             remoteUpload()
+    else:
+        print('Failed to take picture!')
 
 def main():
     print("Starting Melilapse")
