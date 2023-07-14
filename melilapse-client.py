@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from dotenv import load_dotenv, dotenv_values
 from datetime import datetime
 from astral.geocoder import database, lookup
