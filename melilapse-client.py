@@ -15,10 +15,18 @@ def checkGoldenHour():
 def remoteUpload():
     return True
 
-def generateName(goldenhour = False):
+def generateName(goldenHour = False):
+    """Generates jpg file name for localoutput
+
+    Args:
+        goldenHour (bool, optional): Bool of if it's the goldenhour for tagging. Defaults to False.
+
+    Returns:
+        str: full path of output file
+    """
     dir = config['LocalOutput']
     timestamp = str(datetime.now().timestamp())
-    if(goldenhour):
+    if(goldenHour):
         tag = "*"
     else:
         tag = ""
@@ -27,6 +35,8 @@ def generateName(goldenhour = False):
 
 
 def takePicture():
+    """Takes a picture
+    """
     cap = cv2.VideoCapture(int(config['CameraID']))
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(config['FrameWidth']))
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, int(config['FrameHeight']))
@@ -42,6 +52,8 @@ def takePicture():
         print('Failed to take picture!')
 
 def main():
+    """What is life
+    """
     print("Starting Melilapse")
     takePicture()
     print("Ending Melilapse")
