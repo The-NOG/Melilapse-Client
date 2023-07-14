@@ -39,7 +39,7 @@ def generateName(goldenHour = False):
 def takePicture():
     """Takes a picture
     """
-    frame = 0
+    frameNumber = 0
     cap = cv2.VideoCapture(int(config['CameraID']))
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, int(config['FrameWidth']))
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, int(config['FrameHeight']))
@@ -47,7 +47,7 @@ def takePicture():
     while True:
         r, frame = cap.read()
         if r:
-            if(frame == 15):
+            if(frameNumber == 15):
                 if config['EnableLocal']:
                     cv2.imwrite(generateName(),frame)
                     #save locally
@@ -57,7 +57,7 @@ def takePicture():
         else:
             print('Failed to take picture!')
             break
-        frame = frame + 1
+        frameNumber = frameNumber + 1
 
 def validateConfig():
     configValid = True
