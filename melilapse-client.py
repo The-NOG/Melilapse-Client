@@ -56,7 +56,7 @@ def validateConfig():
     configValid = True
     #validate Location
     try:
-        configCity = lookup(Config["Charleston"], database())
+        configCity = lookup(config["Charleston"], database())
     except KeyError as e:
         print("City not recognized")
         return False
