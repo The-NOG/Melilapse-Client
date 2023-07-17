@@ -69,7 +69,7 @@ def validateConfig():
     elif config['Enabled'] == 'False':
         config['Enabled'] = False
     else:
-        Print("Enabled appears invalid")
+        print("Enabled appears invalid")
         return False
     #validate Location
     try:
