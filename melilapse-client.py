@@ -63,6 +63,14 @@ def takePicture():
 
 def validateConfig():
     configValid = True
+    #Basic Config
+    if config['Enabled'] == 'True':
+        config['Enabled'] = True
+    elif config['Enabled'] == 'False':
+        config['Enabled'] = False
+    else:
+        Print("Enabled appears invalid")
+        return False
     #validate Location
     try:
         configCity = lookup(config["ClosestCity"], database())
@@ -102,7 +110,10 @@ def main():
     print("Validating Config")
     if(validateConfig()):
         print("Config appears Valid")
-        takePicture()
+        if(config['Enabled']):
+            takePicture()
+        else:
+            print("Melilapse is disabled!")
     else:
         print("Invalid Config")
     print("Ending Melilapse")
