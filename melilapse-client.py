@@ -78,7 +78,7 @@ def validateConfig():
     try:
         configCity = lookup(config["ClosestCity"], database())
         config["ClosestCity"] = configCity
-        config["tz"] = configCity.timezone
+        config["tz"] = pytz.timezone(configCity.timezone)
         config['dt'] = datetime.now(config['tz'])
     except KeyError as e:
         print("City not recognized")
