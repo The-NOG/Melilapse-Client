@@ -2,14 +2,17 @@
 from dotenv import load_dotenv, dotenv_values
 from datetime import datetime
 from astral.geocoder import database, lookup
+from astral.sun import sun
+import pytz
 import cv2
 
 
 def checkDaytime():
-    return True
-
-def checkNighttime():
-    return False
+    s = sun(config['ClosestCity'].observer,date=config['dt'])
+    if (s['sunrise'] < config['dt']) and (s['sunset'] > config['dt']):
+        return True
+    else:
+        return False
 
 def checkGoldenHour():
     return False
@@ -74,6 +77,9 @@ def validateConfig():
     #validate Location
     try:
         configCity = lookup(config["ClosestCity"], database())
+        config["ClosestCity"] = configCity
+        config["tz"] = configCity.timezone
+        config['dt'] = datetime.now(config['tz'])
     except KeyError as e:
         print("City not recognized")
         return False
@@ -111,7 +117,11 @@ def main():
     if(validateConfig()):
         print("Config appears Valid")
         if(config['Enabled']):
-            takePicture()
+            if(checkDaytime):
+                print("Suns out, shots out!")
+                takePicture()
+            else:
+                print("No pictures at night")
         else:
             print("Melilapse is disabled!")
     else:
