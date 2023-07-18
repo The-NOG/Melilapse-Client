@@ -117,7 +117,7 @@ def main():
     if(validateConfig()):
         print("Config appears Valid")
         if(config['Enabled']):
-            if(checkDaytime):
+            if(checkDaytime()):
                 print("Suns out, shots out!")
                 takePicture()
             else:
