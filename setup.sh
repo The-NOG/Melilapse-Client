@@ -4,4 +4,3 @@ dir="/var/python/Melilapse-Client/"
 cd $dir
 venv="${dir}venv/bin/activate"
 pip install -r requirements
-cp example.env .env
