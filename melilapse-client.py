@@ -9,7 +9,7 @@ import cv2
 
 def checkDaytime():
     s = sun(config['ClosestCity'].observer,date=config['dt'])
-    if (s['sunrise'] < config['dt']) and (s['sunset'] > config['dt']):
+    if (s['sunrise'] < config['dt'] and s['sunset'] > config['dt']):
         return True
     else:
         return False
