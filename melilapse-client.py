@@ -6,6 +6,28 @@ from astral.sun import sun
 import pytz
 import cv2
 
+def testScratchFile(file:str) -> bool:
+    if(readScratchFile(file) == -1):
+        return writeScratchFile(file,0)
+    else:
+        return True
+
+def readScratchFile(file:str) -> int:
+    try:
+        with open(file) as f:
+            content = f.read().splitlines()
+        return int(content[0])
+    except Exception as e:
+        return -1
+
+def writeScratchFile(file:str,iter:int =0) -> bool:
+    try:
+        with open(file,"w+") as f:
+            f.write(str(iter))
+        return True
+    except Exception as e:
+        return False
+    
 
 def checkDaytime():
     s = sun(config['ClosestCity'].observer,date=config['dt'])
@@ -30,13 +52,25 @@ def generateName(goldenHour = False):
         str: full path of output file
     """
     dir = config['LocalOutput']
-    timestamp = str(datetime.now().timestamp())
-    if(goldenHour):
-        tag = "*"
-    else:
-        tag = ""
     file = ".jpg"
-    return dir+timestamp+tag+file
+    if(config['FileNameType'] == "timestamp"):
+        timestamp = str(datetime.now().timestamp())
+        if(goldenHour):
+            tag = "*"
+        else:
+            tag = ""
+        return dir+timestamp+tag+file
+    elif(config['FileNameType'] == 'iteration'):
+        iter = readScratchFile(config['ScratchFile'])
+        filename = dir
+        if(config['IncludeCameraName']):
+            filename = filename + config['CameraName'] + "-"
+        if (config['IncludeDate']):
+            now = datetime.now()
+            filename = filename + now.strftime("%d%m%Y") + "-"
+        filename = filename + str(iter) + file
+        writeScratchFile(config['ScratchFile'],iter+1)
+        return filename
 
 
 def takePicture():
@@ -107,6 +141,32 @@ def validateConfig():
     else:
         print("EnableRemote is invalid")
         return False
+    if config["camername"]:
+        pass
+    else:
+        print("Missing Camera name")
+        return False
+    if config['FileNameType'] not in ["iteration","timestamp"]:
+        print("Invalid Filename Type")
+        return False
+    if config['FileNameType'] == 'iteration':
+        if (testScratchFile(config['ScratchFile']) == False):
+            print("Scratch file failure")
+            return False
+        if config["IncludeCameraName"] == 'True':
+            config["IncludeCameraName"] = True
+        elif config["IncludeCameraName"] == 'False':
+            config["IncludeCameraName"] = False
+        else:
+            print("IncludeCameraName is invalid")
+            return False
+        if config['IncludeDate'] == 'True':
+            config['IncludeDate'] = True
+        elif config['IncludeDate'] =='False':
+            config['IncludeDate'] = False
+        else:
+            print('IncludeDate is invalid')
+            return False
     return configValid
 
 def main():
