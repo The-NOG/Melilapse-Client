@@ -141,6 +141,27 @@ def validateConfig():
     else:
         print("Missing Camera name")
         return False
+    #TimeLapse Settings
+    if config['DaytimeShots'] == 'True':
+        config['DaytimeShots'] = True
+    elif config['DaytimeShots'] == 'False':
+        config['DaytimeShots'] = False
+    else:
+        print("DaytimeShots is invalid")
+        return False
+
+    if config['NightTimeShots'] == 'True':
+        config['NightTimeShots'] = True
+    elif config['NightTimeShots'] == 'False':
+        config['NightTimeShots'] = False
+    else:
+        print("NightTimeShots is invalid")
+        return False
+
+    if (config['DaytimeShots'] == False) and (config['NightTimeShots'] == False):
+        print("Not configured for any time")
+        return False
+        
     if config['FileNameType'] not in ["iteration","timestamp"]:
         print("Invalid Filename Type")
         return False
