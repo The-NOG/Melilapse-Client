@@ -186,7 +186,7 @@ def validateConfig():
     return configValid
 
 def main():
-    """What is life
+    """What is life?
     """
     print("Starting Melilapse")
     print("Validating Config")
@@ -195,14 +195,19 @@ def main():
         print("Config appears Valid")
         #Check if the config has enabled melilapse client
         if(config['Enabled']):
-            #TODO: Use config to check when pictures should be taken
-            if(checkDaytime()):
-                print("Suns out, shots out!")
-                #Take the damn picture and output where needed
-                takePicture()
-            else:
-                #TODO: Update this when ^ TODO is done
-                print("No pictures at night")
+            sunlight = checkDaytime()#Check if the sun is out
+            if(sunlight):#If the sun is out
+                if(config['DaytimeShots']):
+                    print("Taking Daytime Shot!")
+                    takePicture()
+                else:
+                    print("No Daytime Shots")
+            else:#If the sun isn't out
+                if(config['NightTimeShots']):
+                    print("Taking Nighttime shot")
+                    takePicture()
+                else:
+                    print("No pictures at night")
         else:
             print("Melilapse is disabled!")
     else:
