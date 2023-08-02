@@ -36,9 +36,6 @@ def checkDaytime():
     else:
         return False
 
-def checkGoldenHour():
-    return False
-
 def remoteUpload():
     return True
 
