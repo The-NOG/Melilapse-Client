@@ -136,7 +136,7 @@ def validateConfig():
     else:
         print("EnableRemote is invalid")
         return False
-    if config["camername"]:
+    if config["CameraName"]:
         pass
     else:
         print("Missing Camera name")
