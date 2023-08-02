@@ -6,6 +6,14 @@ from astral.sun import sun
 import pytz
 import cv2
 
+def testScratchFile(file:str) -> bool:
+    pass
+
+def readScratchFile(file:str) -> int:
+    pass
+
+def writeScratchFile(file:str,iter:int) -> bool:
+    pass 
 
 def checkDaytime():
     s = sun(config['ClosestCity'].observer,date=config['dt'])
@@ -107,6 +115,32 @@ def validateConfig():
     else:
         print("EnableRemote is invalid")
         return False
+    if config["camername"]:
+        pass
+    else:
+        print("Missing Camera name")
+        return False
+    if config['FileNameType'] not in ["iteration","timestamp"]:
+        print("Invalid Filename Type")
+        return False
+    if config['FileNameType'] == 'iteration':
+        if (testScratchFile(config['ScratchFile']) == False):
+            print("Scratch file failure")
+            return False
+        if config["IncludeCameraName"] == 'True':
+            config["IncludeCameraName"] = True
+        elif config["IncludeCameraName"] == 'False':
+            config["IncludeCameraName"] = False
+        else:
+            print("IncludeCameraName is invalid")
+            return False
+        if config['IncludeDate'] == 'True':
+            config['IncludeDate'] = True
+        elif config['IncludeDate'] =='False':
+            config['IncludeDate'] = False
+        else:
+            print('IncludeDate is invalid')
+            return False
     return configValid
 
 def main():
