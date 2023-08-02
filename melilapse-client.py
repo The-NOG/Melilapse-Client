@@ -7,13 +7,27 @@ import pytz
 import cv2
 
 def testScratchFile(file:str) -> bool:
-    pass
+    if(readScratchFile(file) == -1):
+        return writeScratchFile(file,0)
+    else:
+        return True
 
 def readScratchFile(file:str) -> int:
-    pass
+    try:
+        with open(file) as f:
+            content = f.read().splitlines()
+        return int(content[0])
+    except Exception as e:
+        return -1
 
-def writeScratchFile(file:str,iter:int) -> bool:
-    pass 
+def writeScratchFile(file:str,iter:int =0) -> bool:
+    try:
+        with open(file,"w+") as f:
+            f.write(str(iter))
+        return True
+    except Exception as e:
+        return False
+    
 
 def checkDaytime():
     s = sun(config['ClosestCity'].observer,date=config['dt'])
