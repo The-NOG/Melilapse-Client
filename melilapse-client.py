@@ -74,7 +74,7 @@ def takePicture():
     while True:
         r, frame = cap.read()
         if r:
-            if(frameNumber == 15):
+            if(frameNumber == config['FramesToDiscard']):
                 if config['EnableLocal']:
                     cv2.imwrite(generateName(),frame)
                     #save locally
@@ -113,6 +113,11 @@ def validateConfig():
     except ValueError as identifier:
         print('CameraID is Invalid')
         return False
+    try:
+        config['FramesToDiscard'] = int(config['FramesToDiscard'])
+    except ValueError as identifier:
+        print('FramesToDiscard is Invalid')
+        return False
     #validate Timelapse Settings
 
     #Validate Local Output settings
@@ -131,7 +136,7 @@ def validateConfig():
     else:
         print("EnableRemote is invalid")
         return False
-    if config["camername"]:
+    if config["CameraName"]:
         pass
     else:
         print("Missing Camera name")
