@@ -113,6 +113,11 @@ def validateConfig():
     except ValueError as identifier:
         print('CameraID is Invalid')
         return False
+    try:
+        config['FramesToDiscard'] = int(config['FramesToDiscard'])
+    except ValueError as identifier:
+        print('FramesToDiscard is Invalid')
+        return False
     #validate Timelapse Settings
 
     #Validate Local Output settings
