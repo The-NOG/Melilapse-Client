@@ -52,13 +52,25 @@ def generateName(goldenHour = False):
         str: full path of output file
     """
     dir = config['LocalOutput']
-    timestamp = str(datetime.now().timestamp())
-    if(goldenHour):
-        tag = "*"
-    else:
-        tag = ""
     file = ".jpg"
-    return dir+timestamp+tag+file
+    if(config['FileNameType'] == "timestamp"):
+        timestamp = str(datetime.now().timestamp())
+        if(goldenHour):
+            tag = "*"
+        else:
+            tag = ""
+        return dir+timestamp+tag+file
+    elif(config['FileNameType'] == 'iteration'):
+        iter = readScratchFile(config['ScratchFile'])
+        filename = dir
+        if(config['IncludeCameraName']):
+            filename = filename + config['CameraName'] + "-"
+        if (config['IncludeDate']):
+            now = datetime.now()
+            filename = filename + now.strftime("%d%m%Y") + "-"
+        filename = filename + str(iter) + file
+        writeScratchFile(config['ScratchFile'],iter+1)
+        return filename
 
 
 def takePicture():
