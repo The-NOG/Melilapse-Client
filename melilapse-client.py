@@ -36,17 +36,11 @@ def checkDaytime():
     else:
         return False
 
-def checkGoldenHour():
-    return False
-
 def remoteUpload():
     return True
 
-def generateName(goldenHour = False):
+def generateName():
     """Generates jpg file name for localoutput
-
-    Args:
-        goldenHour (bool, optional): Bool of if it's the goldenhour for tagging. Defaults to False.
 
     Returns:
         str: full path of output file
@@ -55,11 +49,7 @@ def generateName(goldenHour = False):
     file = ".jpg"
     if(config['FileNameType'] == "timestamp"):
         timestamp = str(datetime.now().timestamp())
-        if(goldenHour):
-            tag = "*"
-        else:
-            tag = ""
-        return dir+timestamp+tag+file
+        return dir+timestamp+file
     elif(config['FileNameType'] == 'iteration'):
         iter = readScratchFile(config['ScratchFile'])
         filename = dir
