@@ -74,7 +74,7 @@ def takePicture():
     while True:
         r, frame = cap.read()
         if r:
-            if(frameNumber == 15):
+            if(frameNumber == config['FramesToDiscard']):
                 if config['EnableLocal']:
                     cv2.imwrite(generateName(),frame)
                     #save locally
